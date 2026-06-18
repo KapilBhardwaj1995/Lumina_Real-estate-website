@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUMINA HOMES • भारत के प्रीमियम प्रॉपर्टी</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+    
+    :root {
+      --primary: #0f766e;
+    }
+    
+    body {
+      font-family: 'Inter', system_ui, sans-serif;
+    }
+    
+    .heading-font {
+      font-family: 'Playfair Display', sans-serif;
+    }
+
+    .property-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .property-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 25px 50px -12px rgb(15 118 110 / 0.25);
+    }
+
+    .hero-bg {
+      background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
+                  url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #0f766e;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover:after {
+      width: 100%;
+    }
+
+    .modal {
+      animation: modalPop 0.3s ease forwards;
+    }
+    
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .lang-toggle {
+      font-size: 0.75rem;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      transition: all 0.2s;
+    }
+  </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800">
+  <!-- NAVBAR -->
+  <nav class="bg-white border-b border-zinc-100 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 bg-teal-700 rounded-2xl flex items-center justify-center text-white text-4xl shadow-inner">🏠</div>
+          <div>
+            <span class="heading-font text-4xl font-semibold tracking-tighter text-teal-800">LUMINA</span>
+            <div class="text-[10px] text-teal-600 -mt-1 font-medium tracking-[1.5px]">HOMES</div>
+          </div>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-9 text-sm font-medium">
+          <a href="#home" onclick="navigateTo('home')" class="nav-link text-zinc-700 hover:text-teal-700">Home</a>
+          <a href="#buy" onclick="navigateTo('buy')" class="nav-link text-zinc-700 hover:text-teal-700">Buy</a>
+          <a href="#sell" onclick="navigateTo('sell')" class="nav-link text-zinc-700 hover:text-teal-700">Sell</a>
+          <a href="#contact" onclick="navigateTo('contact')" class="nav-link text-zinc-700 hover:text-teal-700">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <!-- Language Toggle -->
+          <div onclick="toggleLanguage()" id="langBtn"
+               class="lang-toggle bg-teal-100 text-teal-700 hover:bg-teal-200 cursor-pointer flex items-center gap-1 px-4 py-1 text-xs font-medium">
+            <span id="currentLang">EN</span>
+            <i class="fa-solid fa-globe text-xs"></i>
+          </div>
+          
+          <button onclick="navigateTo('sell')" 
+                  class="px-7 py-3 bg-teal-700 hover:bg-teal-800 text-white text-sm font-semibold rounded-3xl transition-all flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i>
+            <span>SELL PROPERTY</span>
+          </button>
+          
+          <button onclick="toggleMobileMenu()" class="md:hidden text-3xl text-zinc-700">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-6 py-6">
+      <div class="flex flex-col gap-6 text-lg">
+        <a href="#home" onclick="navigateTo('home');toggleMobileMenu()" class="font-medium">Home</a>
+        <a href="#buy" onclick="navigateTo('buy');toggleMobileMenu()" class="font-medium">Buy Properties</a>
+        <a href="#sell" onclick="navigateTo('sell');toggleMobileMenu()" class="font-medium">Sell Your Property</a>
+        <a href="#contact" onclick="navigateTo('contact');toggleMobileMenu()" class="font-medium">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero-bg h-screen flex items-center text-white relative">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-3xl text-sm mb-8">
+        <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+        <span class="tracking-widest font-medium">RERA REGISTERED • DELHI-NCR & WESTERN UP</span>
+      </div>
+      
+      <h1 id="heroTitle" class="heading-font text-6xl md:text-7xl font-semibold leading-none tracking-tighter mb-6">
+        Find your dream home in<br><span class="text-amber-300">Delhi-NCR & Western UP</span>
+      </h1>
+      
+      <p id="heroSubtitle" class="max-w-lg mx-auto text-xl text-white/80 mb-12">
+        Premium homes, villas, apartments, plots &amp; fields in Delhi, Gurgaon, Meerut, Shamli, Saharanpur, Muzaffarnagar &amp; nearby areas.
+        <span class="block mt-3 text-base opacity-75">हमें संपर्क करें - हम आपकी मदद करेंगे</span>
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="navigateTo('buy')" 
+                class="px-10 py-5 bg-white text-teal-900 rounded-3xl font-semibold text-lg flex items-center justify-center gap-3 hover:shadow-2xl transition">
+          SEARCH PROPERTIES
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        
+        <button onclick="navigateTo('sell')" 
+                class="px-10 py-5 border-2 border-white/70 hover:bg-white/10 text-white rounded-3xl font-semibold text-lg transition">
+          LIST YOUR PROPERTY
+        </button>
+      </div>
+      
+      <div class="mt-20 flex justify-center gap-8 text-xs opacity-75">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>SECURE</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          <span>TRANSPARENT PRICING</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-headset"></i>
+          <span>24×7 SUPPORT</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-1/2 flex flex-col items-center text-white/60 text-xs tracking-widest">
+      <div class="mb-3">SCROLL FOR PROPERTIES ↓</div>
+      <div class="h-px w-8 bg-white/30"></div>
+    </div>
+  </header>
+
+  <!-- BUY SECTION -->
+  <section id="buy" class="max-w-7xl mx-auto px-6 py-20">
+    <div class="flex justify-between items-end mb-10">
+      <div>
+        <span class="px-5 py-1.5 bg-teal-100 text-teal-700 text-xs font-semibold rounded-3xl">AVAILABLE IN INDIA</span>
+        <h2 id="buyTitle" class="heading-font text-5xl font-semibold tracking-tight mt-3">Properties For Sale</h2>
+        <p id="buyDesc" class="text-zinc-600 mt-2 max-w-md">Search by location, price or property type. All listings are verified.</p>
+      </div>
+      
+      <div class="hidden md:block text-right">
+        <div class="text-sm text-zinc-500">Call us directly</div>
+        <a href="tel:+919876543210" class="block text-3xl font-semibold text-teal-700 hover:text-teal-800">+91 98765 43210</a>
+      </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="bg-white shadow rounded-3xl p-2 mb-10 flex flex-col md:flex-row gap-3">
+      <div class="flex-1 relative">
+        <div class="absolute left-7 top-1/2 -translate-y-1/2 text-zinc-400">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <input id="searchInput" 
+               onkeyup="if(event.key === 'Enter') filterProperties()"
+               type="text" 
+                placeholder="Search by location (Delhi, Gurgaon, Meerut, Shamli...)"
+               class="w-full pl-14 pr-6 py-5 bg-transparent outline-none text-base placeholder:text-zinc-400 rounded-3xl">
+      </div>
+      
+      <div class="flex items-center gap-3 px-4">
+        <select id="typeFilter" onchange="filterProperties()" 
+                class="bg-zinc-100 px-6 py-5 rounded-3xl text-sm font-medium outline-none">
+          <option value="all">All Types</option>
+          <option value="house">House</option>
+          <option value="apartment">Apartment</option>
+          <option value="villa">Villa</option>
+          <option value="plot">Plot / Field</option>
+        </select>
+        
+        <button onclick="filterProperties()" 
+                class="bg-teal-700 text-white px-10 py-5 rounded-3xl font-medium flex items-center gap-2 hover:bg-teal-800 transition">
+          <i class="fa-solid fa-filter"></i>
+          <span>FILTER</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PROPERTY GRID -->
+    <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- SELL SECTION -->
+  <section id="sell" class="bg-zinc-900 text-white py-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-amber-400 text-sm font-medium tracking-widest">BECOME A SELLER</span>
+        <h2 id="sellTitle" class="heading-font text-5xl font-semibold tracking-tighter mt-3">List Your Property With Us</h2>
+        <p id="sellDesc" class="mt-4 text-zinc-400">House, Apartment, Villa, Plot or Agricultural Field in Delhi, Gurgaon or Western Uttar Pradesh — we help you sell at the best price.</p>
+      </div>
+      
+      <form id="sellForm" onsubmit="submitSellForm(event)" class="bg-zinc-800 rounded-3xl p-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="md:col-span-2">
+            <label class="text-xs tracking-widest text-zinc-400 block mb-2">PROPERTY TITLE / नाम</label>
+            <input id="sellTitleInput" type="text" required placeholder="3 BHK Flat in Andheri West" 
+                   class="w-full bg-zinc-900 border border-zinc-700 focus:border-teal-400 rounded-2xl px-6 py-4 outline-none">
+          </div>
+          
+          <div>
+            <label class="text-xs tracking-widest text-zinc-400 block mb-2">PRICE (₹)</label>
+            <input id="sellPriceInput" type="text" required placeholder="1.85 Cr" 
+                   class="w-full bg-zinc-900 border border-zinc-700 focus:border-teal-400 rounded-2xl px-6 py-4 outline-none">
+          </div>
+          
+          <div>
+            <label class="text-xs tracking-widest text-zinc-400 block mb-2">CITY / LOCATION</label>
+            <input id="sellLocationInput" type="text" required placeholder="Shamli, Uttar Pradesh" 
+                   class="w-full bg-zinc-900 border border-zinc-700 focus:border-teal-400 rounded-2xl px-6 py-4 outline-none">
+          </div>
+          
+          <div>
+            <label class="text-xs tracking-widest text-zinc-400 block mb-2">BEDROOMS</label>
+            <input id="sellBedInput" type="number" value="3" 
+                   class="w-full bg-zinc-900 border border-zinc-700 focus:border-teal-400 rounded-2xl px-6 py-4 outline-none">
+          </div>
+          
+          <div>
+            <label class="text-xs tracking-widest text-zinc-400 block mb-2">TYPE</label>
+            <select id="sellTypeInput" 
+                    class="w-full bg-zinc-900 border border-zinc-700 focus:border-teal-400 rounded-2xl px-6 py-4 outline-none">
+              <option value="house">House</option>
+              <option value="apartment">Apartment</option>
+              <option value="villa">Villa</option>
+              <option value="plot" selected>Plot / Field</option>
+            </select>
+          </div>
+          
+          <div class="md:col-span-2">
+            <label class="text-xs tracking-widest text-zinc-400 block mb-2">DESCRIPTION / विवरण (OPTIONAL)</label>
+            <textarea id="sellDescInput" rows="4" placeholder="Beautiful plot near highway with clear title..." 
+                      class="w-full bg-zinc-900 border border-zinc-700 focus:border-teal-400 rounded-3xl px-6 py-5 outline-none resize-y"></textarea>
+          </div>
+        </div>
+        
+        <button type="submit" 
+                class="mt-10 w-full py-6 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold rounded-3xl text-lg flex items-center justify-center gap-3 hover:brightness-110 transition">
+          <i class="fa-solid fa-paper-plane"></i>
+          SUBMIT LISTING FOR REVIEW
+        </button>
+        
+        <p class="text-center text-zinc-500 text-xs mt-8">Our team will call you within 24 hours • RERA Compliant</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="max-w-6xl mx-auto px-6 py-20 bg-white">
+    <div class="grid md:grid-cols-12 gap-16">
+      <div class="md:col-span-7">
+        <h2 id="contactTitle" class="heading-font text-5xl font-semibold tracking-tighter">Get In Touch With Us</h2>
+        <p id="contactDesc" class="mt-6 text-lg text-zinc-600">Looking for a property? Have questions? Call us or send a message. We speak English &amp; Hindi.</p>
+        
+        <div class="mt-12 bg-zinc-100 rounded-3xl p-8">
+          <div class="flex gap-6">
+            <div class="text-5xl">📞</div>
+            <div>
+              <div class="font-medium text-sm text-zinc-500 tracking-wider">CALL US ANYTIME</div>
+              <a href="tel:+919876543210" class="block text-4xl font-semibold text-teal-700 mt-2">+91 98765 43210</a>
+              <div class="text-sm text-zinc-500 mt-8">Mon–Sat : 9am – 7pm</div>
+            </div>
+          </div>
+          
+          <div class="h-px bg-zinc-300 my-10"></div>
+          
+          <div class="flex gap-6">
+            <div class="text-5xl">✉️</div>
+            <div>
+              <div class="font-medium text-sm text-zinc-500 tracking-wider">EMAIL US</div>
+              <a href="mailto:info@lumina.in" class="block text-3xl font-semibold text-teal-700 mt-2">info@lumina.in</a>
+              <div class="mt-4 text-xs leading-relaxed text-zinc-500">
+                We reply within 2 hours during business hours.<br>
+                आप हिंदी या अंग्रेजी में लिख सकते हैं।
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Inquiry Form -->
+      <div class="md:col-span-5">
+        <div class="sticky top-8 bg-teal-50 border border-teal-100 rounded-3xl p-8">
+          <h3 class="font-semibold mb-6 flex items-center gap-2">
+            <span class="text-teal-600">QUICK INQUIRY</span>
+          </h3>
+          
+          <form onsubmit="submitContact(event)" class="space-y-6">
+            <input id="contactName" type="text" placeholder="Your Name / आपका नाम" 
+                   class="w-full px-6 py-4 rounded-2xl border border-transparent focus:border-teal-300 bg-white outline-none">
+            
+            <input id="contactPhone" type="tel" placeholder="Phone Number / फोन नंबर" 
+                   class="w-full px-6 py-4 rounded-2xl border border-transparent focus:border-teal-300 bg-white outline-none">
+            
+            <textarea id="contactMessage" rows="4" placeholder="Looking for 4BHK in Gurgaon or agricultural land in Shamli..." 
+                      class="w-full px-6 py-4 rounded-3xl border border-transparent focus:border-teal-300 bg-white outline-none resize-y"></textarea>
+            
+            <button type="submit"
+                    class="w-full py-5 bg-teal-700 text-white rounded-3xl font-medium text-lg flex items-center justify-center gap-2 hover:bg-teal-800">
+              SEND MESSAGE
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          
+          <div class="text-center text-xs text-teal-700/60 mt-8">
+            या सीधे कॉल करें: <span class="font-mono">98765 43210</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-zinc-950 text-zinc-400 py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-y-12">
+      <div class="col-span-2">
+        <div class="flex items-center gap-x-3 text-white mb-6">
+          <div class="text-5xl">🏠</div>
+          <div class="heading-font text-4xl tracking-tighter">LUMINA</div>
+        </div>
+        <p class="max-w-xs text-sm">Premium real estate services in Delhi, Gurgaon &amp; Western Uttar Pradesh (Shamli, Saharanpur, Meerut, Muzaffarnagar).</p>
+        
+        <div class="mt-10 flex gap-6 text-2xl">
+          <i class="fa-brands fa-instagram cursor-pointer hover:text-white"></i>
+          <i class="fa-brands fa-linkedin cursor-pointer hover:text-white"></i>
+          <i class="fa-brands fa-youtube cursor-pointer hover:text-white"></i>
+        </div>
+        
+        <div class="mt-12 text-xs opacity-40">© 2026 Lumina Homes Private Limited. All Rights Reserved.<br>RERA No. MAHESH123456</div>
+      </div>
+      
+      <div>
+        <div class="uppercase text-teal-400 text-xs font-medium mb-6">Quick Links</div>
+        <div class="space-y-3 text-sm">
+          <div onclick="navigateTo('buy')" class="cursor-pointer hover:text-white">Buy Property</div>
+          <div onclick="navigateTo('sell')" class="cursor-pointer hover:text-white">Sell Property</div>
+          <div class="cursor-pointer hover:text-white">RERA Projects</div>
+          <div class="cursor-pointer hover:text-white">Home Loans</div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="uppercase text-teal-400 text-xs font-medium mb-6">Our Areas</div>
+        <div class="space-y-3 text-sm">
+          <div class="cursor-pointer hover:text-white">Delhi</div>
+          <div class="cursor-pointer hover:text-white">Gurgaon</div>
+          <div class="cursor-pointer hover:text-white">Meerut</div>
+          <div class="cursor-pointer hover:text-white">Shamli</div>
+          <div class="cursor-pointer hover:text-white">Saharanpur</div>
+          <div class="cursor-pointer hover:text-white">Muzaffarnagar</div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="uppercase text-teal-400 text-xs font-medium mb-6">Company</div>
+        <div class="space-y-3 text-sm">
+          <div class="cursor-pointer hover:text-white">About Us</div>
+          <div class="cursor-pointer hover:text-white">Our Agents</div>
+          <div class="cursor-pointer hover:text-white">Careers</div>
+          <div class="cursor-pointer hover:text-white">Blog</div>
+          <div class="cursor-pointer hover:text-white">Contact</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROPERTY DETAIL MODAL -->
+  <div onclick="if(event.target.id === 'modalOverlay') closeModal()" id="modalOverlay" 
+       class="hidden fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center p-4">
+    <div onclick="event.stopImmediatePropagation()" 
+         class="modal bg-white max-w-4xl w-full rounded-3xl overflow-hidden max-h-[90vh] overflow-y-auto">
+      
+      <div class="relative">
+        <button onclick="closeModal()" 
+                class="absolute top-6 right-6 bg-white shadow text-xl w-10 h-10 flex items-center justify-center rounded-full z-10">✕</button>
+        <img id="modalImage" src="" class="w-full h-80 object-cover">
+      </div>
+      
+      <div class="p-10">
+        <div class="flex justify-between">
+          <div>
+            <span id="modalType" class="uppercase text-xs font-bold tracking-widest px-5 py-2 bg-teal-100 text-teal-700 rounded-3xl"></span>
+            <h1 id="modalTitle" class="text-4xl font-semibold mt-5 tracking-tight"></h1>
+            <p id="modalLocation" class="text-xl text-zinc-500 mt-1"></p>
+          </div>
+          <div class="text-right">
+            <div id="modalPrice" class="text-5xl font-semibold text-emerald-600"></div>
+            <div class="text-xs text-zinc-400 tracking-widest mt-1">ASKING PRICE</div>
+          </div>
+        </div>
+        
+        <div class="flex gap-8 mt-12 border-t pt-8">
+          <div class="text-center">
+            <div class="text-4xl font-light" id="modalBeds">4</div>
+            <div class="text-xs text-zinc-500">BEDROOMS</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-light" id="modalBaths">3</div>
+            <div class="text-xs text-zinc-500">BATHROOMS</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-light" id="modalSize">2450</div>
+            <div class="text-xs text-zinc-500">SQ.FT</div>
+          </div>
+        </div>
+        
+        <div id="modalDescription" class="mt-12 text-zinc-600 leading-relaxed text-[15.2px]">
+        </div>
+        
+        <div class="mt-16 bg-zinc-50 border border-dashed border-zinc-300 rounded-2xl p-8 text-center">
+          <div class="text-sm text-zinc-500 mb-4">INTERESTED IN THIS PROPERTY?</div>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="tel:+919876543210" 
+               class="flex-1 py-6 border border-teal-700 text-teal-700 font-medium rounded-3xl flex items-center justify-center gap-3 hover:bg-teal-50">
+              <i class="fa-solid fa-phone"></i>
+              CALL NOW
+            </a>
+            <button onclick="closeModal();alert('Thank you! Our agent will call you shortly on your registered number.')"
+                    class="flex-1 py-6 bg-teal-700 text-white font-medium rounded-3xl">
+              REQUEST CALLBACK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Bilingual Content
+    let isHindi = false;
+    
+    const translations = {
+      en: {
+        heroTitle: "Find your dream home<br>in <span class='text-amber-300'>India</span>",
+        heroSubtitle: "Premium properties across India. Search homes, plots, villas & fields.<br><span class='block mt-3 text-base opacity-75'>Contact us — we'll help you find the perfect property</span>",
+        buyTitle: "Properties For Sale",
+        buyDesc: "Search by location, price or property type. All listings are verified and RERA compliant.",
+        sellTitle: "List Your Property With Us",
+        sellDesc: "Whether it's a house, apartment, villa, plot or agricultural field — we help you sell faster at the best price.",
+        contactTitle: "Get In Touch With Us",
+        contactDesc: "Looking for a property? Have questions? Call us or send a message. We speak English & Hindi."
+      },
+      hi: {
+        heroTitle: "भारत में अपना सपनों का घर<br>ढूंढें",
+        heroSubtitle: "पूरे भारत में प्रीमियम प्रॉपर्टी। घर, प्लॉट, विला और खेत खोजें।<br><span class='block mt-3 text-base opacity-75'>हमें कॉल करें — हम आपकी पूरी मदद करेंगे</span>",
+        buyTitle: "बिक्री के लिए प्रॉपर्टी",
+        buyDesc: "स्थान, मूल्य या प्रकार के अनुसार खोजें। सभी लिस्टिंग वेरिफाइड और RERA कंप्लायंट हैं।",
+        sellTitle: "अपनी प्रॉपर्टी लिस्ट करें",
+        sellDesc: "चाहे घर हो, अपार्टमेंट, विला, प्लॉट या खेती का खेत — हम आपको सबसे अच्छी कीमत पर जल्दी बेचने में मदद करते हैं।",
+        contactTitle: "हमसे संपर्क करें",
+        contactDesc: "कोई प्रॉपर्टी ढूंढ रहे हैं? कोई सवाल है? हमें कॉल करें या मैसेज भेजें। हम हिंदी और अंग्रेजी दोनों बोलते हैं।"
+      }
+    };
+    
+    function toggleLanguage() {
+      isHindi = !isHindi;
+      const langBtn = document.getElementById('langBtn');
+      langBtn.innerHTML = isHindi ? 
+        `<span>हिं</span><i class="fa-solid fa-globe text-xs"></i>` : 
+        `<span>EN</span><i class="fa-solid fa-globe text-xs"></i>`;
+      
+      // Update translatable content
+      document.getElementById('heroTitle').innerHTML = translations[isHindi ? 'hi' : 'en'].heroTitle;
+      document.getElementById('heroSubtitle').innerHTML = translations[isHindi ? 'hi' : 'en'].heroSubtitle;
+      document.getElementById('buyTitle').textContent = translations[isHindi ? 'hi' : 'en'].buyTitle;
+      document.getElementById('buyDesc').textContent = translations[isHindi ? 'hi' : 'en'].buyDesc;
+      document.getElementById('sellTitle').textContent = translations[isHindi ? 'hi' : 'en'].sellTitle;
+      document.getElementById('sellDesc').textContent = translations[isHindi ? 'hi' : 'en'].sellDesc;
+      document.getElementById('contactTitle').textContent = translations[isHindi ? 'hi' : 'en'].contactTitle;
+      document.getElementById('contactDesc').textContent = translations[isHindi ? 'hi' : 'en'].contactDesc;
+    }
+    
+    // Sample Indian Properties
+    let properties = [
+      {
+        id: 1,
+        title: "Luxury 5BHK Villa in DLF Phase 3",
+        price: 68500000,
+        location: "Gurgaon, Haryana",
+        bedrooms: 5,
+        bathrooms: 6,
+        sqft: 6200,
+        type: "villa",
+        image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&q=80",
+        featured: true
+      },
+      {
+        id: 2,
+        title: "4BHK Independent Floor in Greater Noida",
+        price: 18500000,
+        location: "Greater Noida West, Uttar Pradesh",
+        bedrooms: 4,
+        bathrooms: 4,
+        sqft: 2850,
+        type: "house",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a9c?ixlib=rb-4.0.3&auto=format&fit=crop&q=80",
+        featured: true
+      },
+      {
+        id: 3,
+        title: "3BHK Apartment in Dwarka Sector 19",
+        price: 12500000,
+        location: "Dwarka, Delhi",
+        bedrooms: 3,
+        bathrooms: 3,
+        sqft: 1750,
+        type: "apartment",
+        image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 4,
+        title: "25 Acre Fertile Agricultural Land",
+        price: 42500000,
+        location: "Shamli, Uttar Pradesh",
+        bedrooms: 0,
+        bathrooms: 0,
+        sqft: 1089000,
+        type: "plot",
+        image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-4.0.3&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 5,
+        title: "Modern Villa in Sushant Lok",
+        price: 29500000,
+        location: "Gurgaon, Haryana",
+        bedrooms: 4,
+        bathrooms: 5,
+        sqft: 4100,
+        type: "villa",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 6,
+        title: "Large Farm Plot with Tube Well",
+        price: 18500000,
+        location: "Muzaffarnagar, Uttar Pradesh",
+        bedrooms: 0,
+        bathrooms: 0,
+        sqft: 435600,
+        type: "plot",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&q=80"
+      }
+    ];
+    
+    let currentLanguage = 'en';
+    
+    function formatIndianPrice(price) {
+      if (price >= 10000000) {
+        return "₹" + (price / 10000000).toFixed(2) + " Cr";
+      } else if (price >= 100000) {
+        return "₹" + Math.round(price / 100000) + " Lakh";
+      }
+      return "₹" + price.toLocaleString('en-IN');
+    }
+    
+    function renderProperties(filteredProperties) {
+      const container = document.getElementById("propertyGrid");
+      container.innerHTML = "";
+      
+      if (filteredProperties.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-3 py-16 text-center">
+            <div class="mx-auto text-6xl mb-4 opacity-30">🏡</div>
+            <p class="text-xl text-zinc-400">No properties found matching your search.</p>
+            <p class="text-zinc-500 mt-2">Try different keywords or clear filters</p>
+          </div>`;
+        return;
+      }
+      
+      filteredProperties.forEach(property => {
+        const cardHTML = `
+          <div onclick="showPropertyDetail(${property.id})" class="property-card bg-white rounded-3xl overflow-hidden shadow-md cursor-pointer border border-zinc-100">
+            <div class="relative h-64">
+              <img src="${property.image}" class="w-full h-full object-cover transition-transform hover:scale-105 duration-500" alt="${property.title}">
+              <div class="absolute top-5 right-5 bg-white text-teal-800 text-xs font-bold px-4 py-1 rounded-3xl shadow">
+                ${property.type.toUpperCase()}
+              </div>
+              ${property.featured ? `<div class="absolute top-5 left-5 bg-amber-500 text-white text-[10px] font-bold px-4 py-1 rounded-3xl">FEATURED</div>` : ''}
+            </div>
+            <div class="p-6">
+              <div class="font-semibold text-xl leading-tight">${property.title}</div>
+              <div class="flex items-center gap-1 text-zinc-500 text-sm mt-2">
+                <i class="fa-solid fa-location-dot text-rose-500"></i>
+                <span>${property.location}</span>
+              </div>
+              
+              <div class="mt-6 flex justify-between items-end">
+                <div>
+                  <div class="text-emerald-600 text-3xl font-semibold">${formatIndianPrice(property.price)}</div>
+                </div>
+                <div class="text-right text-xs leading-tight">
+                  <div>${property.bedrooms} <span class="text-zinc-400">BHK</span></div>
+                  <div class="text-[10px] text-zinc-400">${property.sqft} sqft</div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        
+        container.innerHTML += cardHTML;
+      });
+    }
+    
+    function filterProperties() {
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
+      const selectedType = document.getElementById("typeFilter").value;
+      
+      let filtered = properties;
+      
+      if (searchTerm !== "") {
+        filtered = filtered.filter(p => 
+          p.title.toLowerCase().includes(searchTerm) || 
+          p.location.toLowerCase().includes(searchTerm)
+        );
+      }
+      
+      if (selectedType !== "all") {
+        filtered = filtered.filter(p => p.type === selectedType);
+      }
+      
+      renderProperties(filtered);
+    }
+    
+    function showPropertyDetail(id) {
+      const property = properties.find(p => p.id === id);
+      if (!property) return;
+      
+      document.getElementById("modalImage").src = property.image;
+      document.getElementById("modalType").textContent = property.type.toUpperCase();
+      document.getElementById("modalTitle").textContent = property.title;
+      document.getElementById("modalLocation").textContent = property.location;
+      document.getElementById("modalPrice").innerHTML = formatIndianPrice(property.price);
+      document.getElementById("modalBeds").textContent = property.bedrooms || "—";
+      document.getElementById("modalBaths").textContent = property.bathrooms || "—";
+      document.getElementById("modalSize").textContent = property.sqft.toLocaleString('en-IN');
+      
+      const desc = document.getElementById("modalDescription");
+      desc.innerHTML = `
+        <p class="mb-6">This beautiful ${property.type} is located in one of the most sought-after areas of ${property.location.split(',')[1] || property.location}.</p>
+        <p>Perfect for families or investors. Clear title, all approvals in place. Contact us immediately to book a site visit.</p>
+        <div class="mt-8 pt-6 border-t text-xs flex justify-between text-zinc-400">
+          <div>Listed on: 12 Feb 2026</div>
+          <div>RERA Approved</div>
+        </div>
+      `;
+      
+      document.getElementById("modalOverlay").classList.remove("hidden");
+      document.getElementById("modalOverlay").classList.add("flex");
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById("modalOverlay");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+    
+    function submitSellForm(e) {
+      e.preventDefault();
+      const title = document.getElementById("sellTitleInput").value;
+      
+      if (title.trim() === "") return;
+      
+      // Simulate adding new property
+      const newProperty = {
+        id: Date.now(),
+        title: title,
+        price: 32500000,
+        location: document.getElementById("sellLocationInput").value || "Pune, Maharashtra",
+        bedrooms: parseInt(document.getElementById("sellBedInput").value) || 3,
+        bathrooms: 3,
+        sqft: 2100,
+        type: document.getElementById("sellTypeInput").value,
+        image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-4.0.3&auto=format&fit=crop&q=80",
+        featured: false
+      };
+      
+      properties.unshift(newProperty);
+      alert("✅ Thank you! Your property has been received. Our team will contact you shortly.");
+      
+      // Reset form
+      document.getElementById("sellForm").reset();
+      
+      // Switch to buy tab and show new listing
+      navigateTo('buy');
+      setTimeout(() => {
+        filterProperties();
+      }, 400);
+    }
+    
+    function submitContact(e) {
+      e.preventDefault();
+      alert("Thank you! Our representative will call you within the next 30 minutes.\nधन्यवाद! हमारी टीम जल्द ही आपसे संपर्क करेगी।");
+      e.target.reset();
+    }
+    
+    function navigateTo(section) {
+      document.querySelectorAll('section').forEach(s => {
+        if (s.id === section) {
+          s.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+      
+      if (section === 'buy') {
+        setTimeout(() => {
+          document.getElementById("searchInput").focus();
+        }, 800);
+      }
+    }
+    
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("hidden");
+    }
+    
+    // Initialize
+    function initialize() {
+      renderProperties(properties);
+      
+      // Close modal when pressing ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+          const modal = document.getElementById("modalOverlay");
+          if (!modal.classList.contains("hidden")) closeModal();
+        }
+      });
+      
+      // Tailwind script run
+      console.log('%cLumina Homes (India) ready. Bilingual support enabled.', 'color:#0f766e; font-family:monospace');
+    }
+    
+    window.onload = initialize;
+  </script>
+</body>
+</html>
